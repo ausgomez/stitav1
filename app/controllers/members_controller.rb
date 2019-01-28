@@ -12,9 +12,14 @@ class MembersController < ApplicationController
   def show
     # Find current member position
     @position = Position.find(@member.position_id)
-
     # Find current member experiences
     @exps = Experience.where(member_id: @member.id)
+    # Find what skills does the member has
+    @skills = Skill.where(member_id: @member.id)
+    # Find what educations does the member has
+    @educations = Education.where(member_id: @member.id)
+    # Find what awards does the member has
+    @awards = Award.where(member_id: @member.id)
 
   end
 

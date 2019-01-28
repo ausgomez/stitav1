@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_222034) do
+ActiveRecord::Schema.define(version: 2019_01_28_230453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "awards", force: :cascade do |t|
+    t.string "name"
+    t.date "year"
+    t.integer "member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "educations", force: :cascade do |t|
+    t.string "school"
+    t.string "degree"
+    t.text "info"
+    t.date "start"
+    t.date "end"
+    t.integer "member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "experiences", force: :cascade do |t|
     t.string "pos_name"
@@ -52,6 +71,14 @@ ActiveRecord::Schema.define(version: 2019_01_28_222034) do
 
   create_table "positions", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.text "info"
+    t.integer "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
