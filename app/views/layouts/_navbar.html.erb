@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <%= link_to ' BIO<b>MEDICAL</b>'.html_safe, root_path, class: 'navbar-brand' %>
+    <%= link_to ' Member<b>App</b>'.html_safe, root_path, class: 'navbar-brand' %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,15 +8,15 @@
         <ul class="navbar-nav ml-auto">
           <% if current_user %>
             <li class="nav-item dropdown active">
-            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-sliders-h"></i> Manage
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to '<i class="fas fa-users"></i> Members'.html_safe, members_path, class: "dropdown-item" %>
-              <div class="dropdown-divider"></div>
-                <%= link_to '<i class="fas fa-info-circle"></i> Help'.html_safe, root_path, class: 'dropdown-item' %>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <%= link_to '<i class="fas fa-users"></i> Members'.html_safe, members_path, class: "dropdown-item" %>
+                <div class="dropdown-divider"></div>
+                  <%= link_to '<i class="fas fa-info-circle"></i> Help'.html_safe, root_path, class: 'dropdown-item' %>
               </div>
-          </li>
+            </li>
           <% end %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

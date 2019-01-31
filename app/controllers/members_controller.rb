@@ -5,6 +5,7 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     @members = Member.all
+    @users = User.all
   end
 
   # GET /members/1
@@ -25,27 +26,37 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
+    redirect_to(members_path, alert: 'You have no rights to CREATE a new client') unless current_user.admin?
     @member = Member.new
+    @positions = Position.all
   end
 
   # GET /members/1/edit
   def edit
+    redirect_to(members_path, alert: 'You have no rights to EDIT a new client') unless current_user.admin?
+    @positions = Position.all
   end
 
   # POST /members
   # POST /members.json
   def create
-    @member = Member.new(member_params)
-
-    # In this part I want to specify that the member being created is under the user logged in
-    @member.user_id = current_user.id
-    respond_to do |format|
-      if @member.save
-        format.html { redirect_to @member, notice: 'Member was successfully created.' }
-        format.json { render :show, status: :created, location: @member }
-      else
-        format.html { render :new }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+    if current_user.admin?
+      @member = Member.new(member_params)
+      @member.user_id = current_user.id
+      @positions = Position.all
+      # In this part I want to specify that the member being created is under the user logged in
+      respond_to do |format|
+        if @member.save
+          format.html { redirect_to @member, notice: 'Member was successfully created.' }
+          format.json { render :show, status: :created, location: @member }
+        else
+          format.html { render :new }
+          format.json { render json: @member.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to members_path, alert: 'You have no rights to create a new member' }
       end
     end
   end
@@ -53,13 +64,21 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1
   # PATCH/PUT /members/1.json
   def update
-    respond_to do |format|
-      if @member.update(member_params)
-        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
-        format.json { render :show, status: :ok, location: @member }
-      else
-        format.html { render :edit }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+    if current_user.admin?
+      @member.user_id = @member.user_id
+      @positions = Position.all
+      respond_to do |format|
+        if @member.update(member_params)
+          format.html { redirect_to @member, notice: 'Member was successfully updated.' }
+          format.json { render :show, status: :ok, location: @member }
+        else
+          format.html { render :edit }
+          format.json { render json: @member.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to members_path, alert: 'You have no rights to Edit a new member' }
       end
     end
   end
@@ -82,6 +101,8 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:fn, :ln, :about, :position_id, :interests, :address, :city, :state, :zip, :phone, :email, :photo, :experience_id, :education_id, :skill_id, :award_id, :user_id, :likedin, :github, :twitter, :facebook, :instagram)
+      params.require(:member).permit(:user_id, :active, :fn, :ln, :phone, :email, :photo, :position_id, :about,
+                                      :interests, :address, :city, :zip, :state, :linkedin, :github, :twitter, :facebook, 
+                                      :instagram)
     end
 end

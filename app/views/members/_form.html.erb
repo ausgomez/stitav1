@@ -3,19 +3,83 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :fn %>
-    <%= f.input :ln %>
-    <%= f.input :about %>
-    <%= f.input :interests %>
-    <%= f.input :address %>
-    <%= f.input :phone %>
-    <%= f.input :email %>
-    <%= f.input :photo %>
-    <%= f.input :user_id %>
+<div class="form-row">
+  <% if @member.id? %>
+    <%= f.hidden_field :user_id, :value => @member.id %>
+  <% else %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  <% end %>
+  <div class="form-group col-md-12">
+    <%= f.input :active, label: 'Active' %>
   </div>
+  <div class="form-group col-md-6">
+    <%= f.input :fn, label: 'First Name' %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.input :ln, label: 'Last Name' %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.input :phone, label: 'Phone' %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.input :email, label: 'Email' %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.input :photo, label: 'Photo Link' %>
+  </div>
+  <div class="form-group col-md-6">
+          <label for="position_id">position</label>
+          <%= f.collection_select(:position_id, @positions.order("name ASC"), :id, :name, {:include_blank => false}, {:class => 'form-control'}) %>
+  </div>
+  <div class="form-group col-md-12">
+    <%= f.input :about, label: 'About' %>
+  </div>
+  <div class="form-group col-md-12">
+    <%= f.input :interests, label: 'Interests' %>
+  </div>
+  <div class="form-group col-md-6">
+    <%= f.input :address, label: 'Address' %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.input :city, label: 'City' %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.input :zip, label: 'zipcode' %>
+  </div>
+  <div class="form-group col-md-2">
+          <%= f.input :state, priority: [ "TX" ],
+           collection: ['AL', 'AK', 'AS', 'AZ', 
+           'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 
+           'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 
+           'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 
+           'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 
+           'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 
+           'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 
+           'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 
+           'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 
+           'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 
+           'WY', 'AE', 'AA', 'AP'] %>
+    </div>
+  <div class="form-group col-md-2">
+      <%= f.input :linkedin, label: 'Linkedin' %>
+  </div>
+  <div class="form-group col-md-2">
+      <%= f.input :github, label: 'Github' %>
+  </div>
+  <div class="form-group col-md-2">
+      <%= f.input :twitter, label: 'Twitter' %>
+  </div>
+  <div class="form-group col-md-2">
+      <%= f.input :facebook, label: 'Facebook' %>
+  </div>
+  <div class="form-group col-md-2">
+      <%= f.input :instagram, label: 'Instagram' %>
+  </div>
+</div>
+
+
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
   </div>
 <% end %>

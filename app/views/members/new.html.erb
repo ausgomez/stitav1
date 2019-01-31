@@ -1,5 +1,7 @@
-<h1>New Member</h1>
-
-<%= render 'form', member: @member %>
-
+<div class="jumbotron">
+    <h1 class="display-4">New Member</h1>
+    <p class="lead">
+        <%= render 'form', member: @member %>
+    </p>
+</div>
 <%= link_to 'Back', members_path %>

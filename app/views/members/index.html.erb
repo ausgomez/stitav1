@@ -1,18 +1,13 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Members</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Fn</th>
-      <th>Ln</th>
-      <th>Interests</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Email</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th scope="col">Firstname</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Email</th>
+      <th scope="col">User</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -21,14 +16,17 @@
       <tr>
         <td><%= member.fn %></td>
         <td><%= member.ln %></td>
-        <td><%= member.interests %></td>
-        <td><%= member.address %></td>
-        <td><%= member.phone %></td>
         <td><%= member.email %></td>
-        <td><%= member.user_id %></td>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= @users.find(member.user_id).email %>
+        </td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe, member, :class => 'btn btn-primary' %>
+            <%= link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_member_path(member), :class => 'btn btn-success' if current_user.admin %>
+            <%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, member, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' if current_user.admin %>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +34,4 @@
 
 <br>
 
-<%= link_to 'New Member', new_member_path %>
+<%= link_to '<i class="fas fa-user-plus"></i> Add Member'.html_safe, new_member_path, :class => 'btn btn-success' if current_user.admin %>
