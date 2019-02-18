@@ -1,5 +1,7 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :validate_user]
+  before_action :check_public, only: [:show]
 
   # GET /members
   # GET /members.json
@@ -11,17 +13,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
-    # Find current member position
-    @position = Position.find(@member.position_id)
-    # Find current member experiences
-    @exps = Experience.where(member_id: @member.id)
-    # Find what skills does the member has
-    @skills = Skill.where(member_id: @member.id)
-    # Find what educations does the member has
-    @educations = Education.where(member_id: @member.id)
-    # Find what awards does the member has
-    @awards = Award.where(member_id: @member.id)
-
+    @validate_user = :validate_user
   end
 
   # GET /members/new
@@ -33,8 +25,8 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
-    redirect_to(members_path, alert: 'You have no rights to EDIT a new client') unless current_user.admin?
-    @positions = Position.all
+    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
+    
   end
 
   # POST /members
@@ -64,6 +56,7 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1
   # PATCH/PUT /members/1.json
   def update
+    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
     if current_user.admin?
       @member.user_id = @member.user_id
       @positions = Position.all
@@ -86,6 +79,7 @@ class MembersController < ApplicationController
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
+    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
     @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
@@ -104,5 +98,17 @@ class MembersController < ApplicationController
       params.require(:member).permit(:user_id, :active, :fn, :ln, :phone, :email, :photo, :position_id, :about,
                                       :interests, :address, :city, :zip, :state, :linkedin, :github, :twitter, :facebook, 
                                       :instagram)
+    end
+
+    def validate_user
+      if current_user.id == @member.user_id || current_user.admin?
+        return true
+      else
+        false
+      end
+    end
+
+    def check_public
+      #redirect_to root_path, notice: 'This profile is not public' unless @member.active? || current_user.admin? || current_user.id == @member.user_id
     end
 end

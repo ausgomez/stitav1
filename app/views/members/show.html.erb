@@ -31,19 +31,19 @@
               <li class="nav-item">
                   <a class="nav-link js-scroll-trigger" href="#awards">Awards</a>
               </li>
-              <hr>
-              <% if current_user.admin? or current_user.id == @member.id %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-              </li>
-              <% end %>
+              <hr> 
+                <% if current_user && (current_user.admin? or current_user.id == @member.id) %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                  </div>
+                </li>
+                <% end %>
               <li class="nav-item">
                   <%= link_to '<i class="fas fa-arrow-left"></i> return'.html_safe, members_path, :class => 'nav-link js-scroll-trigger' %>
               </li>
@@ -53,31 +53,25 @@
     <div class="container-fluid p-0">
         <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
             <div class="my-auto">
+              <% # if logged in user is the owner of this profile allow them to edit %>
+              <% if current_user %>
+                <%= link_to '<i class="fas fa-pencil-alt"></i> Edit my profile'.html_safe, edit_member_path(@member), :class => 'btn btn-success' if current_user.admin || current_user.id == @member.user_id %>
+              <% end %>
               <h1 class="mb-0"><%= @member.fn %>
                 <span class="text-primary"><%= @member.ln %></span>
               </h1>
               <p></p>
-              <h3><%= @position.name %></h3>
+              <h3><%= @member.position.name %></h3>              
               <div class="subheading mb-5"><%= @member.address %> · <%= @member.city %>, <%= @member.state %> <%= @member.zip %> · <%= @member.phone %> ·
                 <a href="<%= @member.email %>"><%= @member.email %></a>
               </div>
               <p class="lead mb-5"><%= @member.about %></p>
               <div class="social-icons">
-                <a href="<%= @member.linkedin %>">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="<%= @member.github %>">
-                  <i class="fab fa-github"></i>
-                </a>
-                <a href="<%= @member.twitter %>">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a href="<%= @member.facebook %>">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="<%= @member.instagram %>">
-                  <i class="fab fa-instagram"></i>
-                </a>
+                <%= link_to '<i class="fab fa-linkedin-in"></i>'.html_safe, url_for(@member.linkedin), data: { confirm: "You are leaving this website" } unless @member.linkedin.empty? %>
+                <%= link_to '<i class="fab fa-github"></i>'.html_safe, url_for(@member.github), data: { confirm: "You are leaving this website" } unless @member.github.empty? %>
+                <%= link_to '<i class="fab fa-twitter"></i>'.html_safe, url_for(@member.twitter), data: { confirm: "You are leaving this website" } unless @member.twitter.empty? %>
+                <%= link_to '<i class="fab fa-facebook-f"></i>'.html_safe, url_for(@member.facebook), data: { confirm: "You are leaving this website" } unless @member.facebook.empty? %>
+                <%= link_to '<i class="fab fa-instagram"></i>'.html_safe, url_for(@member.instagram), data: { confirm: "You are leaving this website" } unless @member.instagram.empty? %>
               </div>
             </div>
             </section>
@@ -88,7 +82,7 @@
             <div class="my-auto">
               <h2 class="mb-5">Experience</h2>
             
-              <% @exps.each do |exp| %>
+              <% @member.experiences.each do |exp| %>
                 <!-- Position -->
                 <div class="resume-item d-flex flex-column flex-md-row mb-5">
                   <div class="resume-content mr-auto">
@@ -113,7 +107,7 @@
             <div class="my-auto">
               <h2 class="mb-5">Education</h2>
 
-              <% @educations.each do |eds| %>
+              <% @member.educations.each do |eds| %>
                 <div class="resume-item d-flex flex-column flex-md-row mb-5">
                   <div class="resume-content mr-auto">
                     <h3 class="mb-0"><%= eds.school %></h3>
@@ -177,7 +171,7 @@
     
               <!--div class="subheading mb-3">Workflow</div-->
               <ul class="fa-ul mb-0">
-                <% @skills.each do |skill| %>
+                <% @member.skills.each do |skill| %>
                   <li>
                     <i class="fa-li fa fa-check"></i>
                     <%= skill.name %>, <%= skill.info %>
@@ -202,7 +196,7 @@
             <div class="my-auto">
               <h2 class="mb-5">Awards &amp; Certifications</h2>
               <ul class="fa-ul mb-0">
-                <% @awards.each do |award| %>
+                <% @member.awards.each do |award| %>
                   <li>
                     <i class="fa-li fa fa-trophy text-warning"></i>
                     <%= award.name %> - <%= award.year.try(:strftime, '%Y') %>
@@ -218,3 +212,6 @@
 
 <%= link_to 'Edit', edit_member_path(@member) %> |
 <%= link_to 'Back', members_path %>
+
+
+<%= render 'edituser_modal' %>
