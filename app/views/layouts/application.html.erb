@@ -19,7 +19,9 @@
       <br>
       <br>
       <%= render 'layouts/alerts' %>
-      <%= render 'layouts/navbar' %>
+      <% if !current_page?(controller: 'members') %>
+        <%= render 'layouts/navbar' %>
+      <% end %>
       <%= yield %>
     </div>
   </body>

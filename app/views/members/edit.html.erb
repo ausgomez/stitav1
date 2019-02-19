@@ -54,7 +54,7 @@
         <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
             <div class="my-auto">
               <% # if logged in user is the owner of this profile allow them to edit %>
-              <% if @validate_user %>
+              <% if :validate_user? %>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
                   Edit Info
                 </button>
@@ -69,11 +69,11 @@
               </div>
               <p class="lead mb-5"><%= @member.about %></p>
               <div class="social-icons">
-                <%= link_to '<i class="fab fa-linkedin-in"></i>'.html_safe, url_for(@member.linkedin), data: { confirm: "You are leaving this website" } unless @member.linkedin.empty? %>
-                <%= link_to '<i class="fab fa-github"></i>'.html_safe, url_for(@member.github), data: { confirm: "You are leaving this website" } unless @member.github.empty? %>
-                <%= link_to '<i class="fab fa-twitter"></i>'.html_safe, url_for(@member.twitter), data: { confirm: "You are leaving this website" } unless @member.twitter.empty? %>
-                <%= link_to '<i class="fab fa-facebook-f"></i>'.html_safe, url_for(@member.facebook), data: { confirm: "You are leaving this website" } unless @member.facebook.empty? %>
-                <%= link_to '<i class="fab fa-instagram"></i>'.html_safe, url_for(@member.instagram), data: { confirm: "You are leaving this website" } unless @member.instagram.empty? %>
+                <%= link_to '<i class="fab fa-linkedin-in"></i>'.html_safe, url_for(@member.linkedin), data: { confirm: "You are leaving this website" } unless @member.linkedin.to_s.empty? %>
+                <%= link_to '<i class="fab fa-github"></i>'.html_safe, url_for(@member.github), data: { confirm: "You are leaving this website" } unless @member.github.to_s.empty? %>
+                <%= link_to '<i class="fab fa-twitter"></i>'.html_safe, url_for(@member.twitter), data: { confirm: "You are leaving this website" } unless @member.twitter.to_s.empty? %>
+                <%= link_to '<i class="fab fa-facebook-f"></i>'.html_safe, url_for(@member.facebook), data: { confirm: "You are leaving this website" } unless @member.facebook.to_s.empty? %>
+                <%= link_to '<i class="fab fa-instagram"></i>'.html_safe, url_for(@member.instagram), data: { confirm: "You are leaving this website" } unless @member.instagram.to_s.empty? %>
               </div>
             </div>
             </section>

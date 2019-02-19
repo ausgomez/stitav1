@@ -1,13 +1,14 @@
 class MembersController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :index]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :validate_user]
+  before_action :validate_user_action, only: [:edit, :update, :destroy]
   before_action :check_public, only: [:show]
+  before_action :check_created_profile, only: [:new, :create]
 
   # GET /members
   # GET /members.json
   def index
     @members = Member.all
-    @users = User.all
   end
 
   # GET /members/1
@@ -18,37 +19,28 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
-    redirect_to(members_path, alert: 'You have no rights to CREATE a new client') unless current_user.admin?
     @member = Member.new
-    @positions = Position.all
   end
 
   # GET /members/1/edit
   def edit
-    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
     
   end
 
   # POST /members
   # POST /members.json
   def create
-    if current_user.admin?
-      @member = Member.new(member_params)
-      @member.user_id = current_user.id
-      @positions = Position.all
-      # In this part I want to specify that the member being created is under the user logged in
-      respond_to do |format|
-        if @member.save
-          format.html { redirect_to @member, notice: 'Member was successfully created.' }
-          format.json { render :show, status: :created, location: @member }
-        else
-          format.html { render :new }
-          format.json { render json: @member.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to members_path, alert: 'You have no rights to create a new member' }
+    @member = Member.new(member_params)
+    @member.user_id = current_user.id
+    @positions = Position.all
+    # In this part I want to specify that the member being created is under the user logged in
+    respond_to do |format|
+      if @member.save
+        format.html { redirect_to @member, notice: 'Member was successfully created.' }
+        format.json { render :show, status: :created, location: @member }
+      else
+        format.html { render :new }
+        format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,8 +48,6 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1
   # PATCH/PUT /members/1.json
   def update
-    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
-    if current_user.admin?
       @member.user_id = @member.user_id
       @positions = Position.all
       respond_to do |format|
@@ -69,17 +59,12 @@ class MembersController < ApplicationController
           format.json { render json: @member.errors, status: :unprocessable_entity }
         end
       end
-    else
-      respond_to do |format|
-        format.html { redirect_to members_path, alert: 'You have no rights to Edit a new member' }
-      end
-    end
   end
 
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
-    redirect_to(@member, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.') unless validate_user
+    
     @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
@@ -100,7 +85,7 @@ class MembersController < ApplicationController
                                       :instagram)
     end
 
-    def validate_user
+    def validate_user # this just returns a true or false
       if current_user.id == @member.user_id || current_user.admin?
         return true
       else
@@ -108,7 +93,17 @@ class MembersController < ApplicationController
       end
     end
 
+    def validate_user_action # this just returns a true or false
+      redirect_to root_path, alert: 'You do not have the rigths to edit ' + @member.fn + ' profile.' unless validate_user
+    end
+
     def check_public
-      #redirect_to root_path, notice: 'This profile is not public' unless @member.active? || current_user.admin? || current_user.id == @member.user_id
+      redirect_to root_path, notice: 'This profile is not public' unless @member.active? || validate_user
+    end
+
+    def check_created_profile
+      # this method checks if the current_user has already a profile created or
+      # if the current_user is not admin
+      redirect_to root_path, alert: 'You already have a profile created' unless current_user.members.count <= 0 || current_user.admin
     end
 end
