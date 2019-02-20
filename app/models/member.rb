@@ -21,7 +21,7 @@ class Member < ApplicationRecord
     # We must also check that the custom_id and the email are unique 
     validates_uniqueness_of :custom_id
     validates_uniqueness_of :email
-
+    
     # before saving we want to create a custom id
     before_save :create_custom_id
 
