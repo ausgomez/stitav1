@@ -75,7 +75,14 @@ class MembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      # I want to first check if the value exists before trying to find it
+      if Member.where(custom_id: params[:custom_id]).any?
+        # once found a value, lets set it to the @member
+        @member = Member.find_by(custom_id: params[:custom_id])
+      else
+        # if not we can just send a message saying that the value was not found
+        redirect_to root_path, notice: 'Profile not found'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
