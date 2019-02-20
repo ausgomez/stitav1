@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project was created to STITA
 
 Things you may want to cover:
 
-* Ruby version
+* Member administration
 
-* System dependencies
+* Payments
 
-* Configuration
+* User Auth
 
-* Database creation
+* Admin users
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
+* Boostrap 4
 
 * ...
