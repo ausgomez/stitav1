@@ -14,7 +14,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
-    @validate_user = :validate_user
+    @validate_user = validate_user
   end
 
   # GET /members/new
@@ -86,10 +86,10 @@ class MembersController < ApplicationController
     end
 
     def validate_user # this just returns a true or false
-      if current_user.id == @member.user_id || current_user.admin?
+      if current_user && (current_user.id == @member.user_id || current_user.admin?)
         return true
       else
-        false
+        return false
       end
     end
 

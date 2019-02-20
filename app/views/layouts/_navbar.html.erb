@@ -28,6 +28,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% if current_user %>
+                <%= link_to '<i class="fas fa-street-view"></i> My Profile'.html_safe, member_path(Member.where(user_id: current_user.id).first), class: 'dropdown-item' if Member.where(user_id: current_user.id).any? %>
                 <%= link_to '<i class="fas fa-cogs"></i> Account Settings'.html_safe, edit_user_registration_path, class: 'dropdown-item' %>
                 <%= link_to '<i class="fas fa-sign-out-alt"></i> Sign out '.html_safe, destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
               <% else %>

@@ -1,0 +1,8 @@
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
+    <div class="dropdown-menu">
+        <%= link_to 'Edit my profile'.html_safe, edit_member_path(@member), :class => 'dropdown-item' %>
+        <%= link_to 'Account Settings'.html_safe, edit_user_registration_path, class: 'dropdown-item' %>
+        <%= link_to 'Sign out '.html_safe, destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+    </div>
+</li>

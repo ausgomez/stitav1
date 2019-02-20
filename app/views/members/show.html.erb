@@ -32,17 +32,9 @@
                   <a class="nav-link js-scroll-trigger" href="#awards">Awards</a>
               </li>
               <hr> 
-                <% if current_user && (current_user.admin? or current_user.id == @member.id) %>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-pencil-alt"></i></a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
-                  </div>
-                </li>
+                <% if @validate_user %>
+                  <%# ACTIONS %>
+                  <%= render 'actions' %>
                 <% end %>
               <li class="nav-item">
                   <%= link_to '<i class="fas fa-arrow-left"></i> return'.html_safe, root_path, :class => 'nav-link js-scroll-trigger' %>
@@ -61,7 +53,7 @@
                 <span class="text-primary"><%= @member.ln %></span>
               </h1>
               <p></p>
-              <h3><%= @member.position.name %></h3>              
+              <h3><%= @member.position.name %> @ <%= link_to 'STITA', root_path, class: 'text-info' %></h3>              
               <div class="subheading mb-5"><%= @member.address %> · <%= @member.city %>, <%= @member.state %> <%= @member.zip %> · <%= @member.phone %> ·
                 <a href="<%= @member.email %>"><%= @member.email %></a>
               </div>
@@ -209,9 +201,6 @@
     </div>
 
 </div>
-
-<%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
 
 
 <%= render 'edituser_modal' %>
