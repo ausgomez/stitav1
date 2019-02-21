@@ -1,16 +1,17 @@
 class EducationsController < ApplicationController
-  before_action :set_education, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new]
+  before_action :set_education, only: [:edit, :update, :destroy]
 
   # GET /educations
   # GET /educations.json
-  def index
-    @educations = Education.all
-  end
+  #def index
+  #  @educations = Education.all
+  #end
 
   # GET /educations/1
   # GET /educations/1.json
-  def show
-  end
+  #def show
+  #end
 
   # GET /educations/new
   def new
@@ -40,9 +41,10 @@ class EducationsController < ApplicationController
   # PATCH/PUT /educations/1
   # PATCH/PUT /educations/1.json
   def update
+    @member = Member.find_by(id: @education.member_id)
     respond_to do |format|
       if @education.update(education_params)
-        format.html { redirect_to @education, notice: 'Education was successfully updated.' }
+        format.html { redirect_to edit_member_url(@member, :anchor => "education"), notice: 'Education was successfully updated.' }
         format.json { render :show, status: :ok, location: @education }
       else
         format.html { render :edit }
