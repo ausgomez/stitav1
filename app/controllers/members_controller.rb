@@ -4,6 +4,7 @@ class MembersController < ApplicationController
   before_action :validate_user_action, only: [:edit, :update, :destroy]
   before_action :check_public, only: [:show]
   before_action :check_created_profile, only: [:new, :create]
+  before_action :is_admin?, only: [:index] # only the admin can see all members in a table
 
   # GET /members
   # GET /members.json
@@ -48,8 +49,7 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1
   # PATCH/PUT /members/1.json
   def update
-      @member.user_id = @member.user_id
-      @positions = Position.all
+      #@member.user_id = current_user.id
       respond_to do |format|
         if @member.update(member_params)
           format.html { redirect_to @member, notice: 'Member was successfully updated.' }

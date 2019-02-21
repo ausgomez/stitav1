@@ -54,9 +54,9 @@
               </h1>
               <p></p>
               <h3><%= @member.position.name %> @ <%= link_to 'STITA', root_path, class: 'text-info' %></h3>              
-              <div class="subheading mb-5"><%= @member.address %> · <%= @member.city %>, <%= @member.state %> <%= @member.zip %> · <%= @member.phone %> ·
+              <!-- <div class="subheading mb-5"><%= @member.address %> · <%= @member.city %>, <%= @member.state %> <%= @member.zip %> · <%= @member.phone %> ·
                 <a href="<%= @member.email %>"><%= @member.email %></a>
-              </div>
+              </div> -->
               <p class="lead mb-5"><%= @member.about %></p>
               <div class="social-icons">
                 <%= link_to '<i class="fab fa-linkedin-in"></i>'.html_safe, url_for(@member.linkedin), data: { confirm: "You are leaving this website" } unless @member.linkedin.to_s.empty? %>

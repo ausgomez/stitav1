@@ -8,7 +8,7 @@
 
 
 Position.create!([
-  {id: 1, name: "Member"}
+  {name: "Member"}
 ])
 
 User.create!([

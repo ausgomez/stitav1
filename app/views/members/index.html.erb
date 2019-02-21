@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th scope="col">ID</th>
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
       <th scope="col">Custom ID</th>
@@ -15,6 +16,7 @@
   <tbody>
     <% @members.each do |member| %>
       <tr>
+        <td><%= member.id %></td>
         <td><%= member.fn %></td>
         <td><%= member.ln %></td>
         <td><%= member.custom_id %></td>

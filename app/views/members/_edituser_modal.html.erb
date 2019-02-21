@@ -14,11 +14,6 @@
           <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
         <div class="form-row">
-          <% if @member.id? %>
-            <%= f.hidden_field :user_id, :value => @member.id %>
-          <% else %>
-            <%= f.hidden_field :user_id, :value => current_user.id %>
-          <% end %>
           <div class="form-group col-md-12">
             <%= f.input :active, label: 'Public Profile' %>
           </div>
@@ -34,6 +29,12 @@
           <div class="form-group col-md-6">
             <%= f.input :email, label: 'Email' %>
           </div>
+           <% if current_user && current_user.admin? # only admins can change a member's position whatsoever %>
+          <div class="form-group col-md-12">
+              <label for="position_id">User Email</label>
+              <%= f.collection_select(:user_id, User.all.order("email ASC"), :id, :email, {:include_blank => false}, {:class => 'form-control'}) %>
+          </div>
+          <% end %>
           <div class="form-group col-md-6">
             <%= f.input :photo, label: 'Photo Link' %>
           </div>

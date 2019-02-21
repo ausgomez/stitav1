@@ -1,4 +1,7 @@
 class PositionsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :is_admin? #calls method in app controller
+
   before_action :set_position, only: [:show, :edit, :update, :destroy]
 
   # GET /positions
@@ -54,11 +57,12 @@ class PositionsController < ApplicationController
   # DELETE /positions/1
   # DELETE /positions/1.json
   def destroy
-    @position.destroy
-    respond_to do |format|
-      format.html { redirect_to positions_url, notice: 'Position was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to positions_path, alert: 'For security reasons, you cannot delete a position'
+    #@position.destroy
+    #respond_to do |format|
+    #  format.html { redirect_to positions_url, notice: 'Position was successfully destroyed.' }
+    #  format.json { head :no_content }
+    #end
   end
 
   private
