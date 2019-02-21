@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal fade" id="editEducationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">My Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for(Education.new) do |f| %>
+    <div class="modal-body">
+        <%= f.error_notification %>
+        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+        <div class="form-inputs">
+            <%= f.input :school %>
+            <%= f.input :degree %>
+            <%= f.input :info %>
+            <%= f.input :start %>
+            <%= f.input :end %>
+            <%= f.hidden_field :member_id, :value => @member.id %>
+    </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.button :submit, :class => 'btn btn-primary' %>
+      </div>
+      
+        <% end %>
+    </div>
+  </div>
+</div>

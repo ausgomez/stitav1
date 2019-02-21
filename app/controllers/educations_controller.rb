@@ -25,14 +25,14 @@ class EducationsController < ApplicationController
   # POST /educations.json
   def create
     @education = Education.new(education_params)
-
+    @member = Member.find_by(id: @education.member_id)
     respond_to do |format|
       if @education.save
-        format.html { redirect_to @education, notice: 'Education was successfully created.' }
-        format.json { render :show, status: :created, location: @education }
+        format.html { redirect_to edit_member_url(@member, :anchor => "education"), notice: 'Education was successfully created.' }
+        format.json { render :show, status: :created, location: edit_member_url(@member)}
       else
         format.html { render :new }
-        format.json { render json: @education.errors, status: :unprocessable_entity }
+        format.json { render json: edit_member_url(@member).errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,9 +54,10 @@ class EducationsController < ApplicationController
   # DELETE /educations/1
   # DELETE /educations/1.json
   def destroy
+    @member = Member.find_by(id: @education.member_id)
     @education.destroy
     respond_to do |format|
-      format.html { redirect_to educations_url, notice: 'Education was successfully destroyed.' }
+      format.html { redirect_to edit_member_url(@member, :anchor => "education"), notice: 'Education was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

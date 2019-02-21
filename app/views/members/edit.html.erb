@@ -99,20 +99,59 @@
     
           <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
             <div class="my-auto">
+              <% if :validate_user? %>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editEducationModal">
+                  <i class="fas fa-user-cog"></i> Add Education
+                </button>
+              <% end %>
               <h2 class="mb-5">Education</h2>
-
-              <% @member.educations.each do |eds| %>
-                <div class="resume-item d-flex flex-column flex-md-row mb-5">
-                  <div class="resume-content mr-auto">
-                    <h3 class="mb-0"><%= eds.school %></h3>
-                    <div class="subheading mb-3"><%= eds.degree %></div>
-                    <div><%= eds.info %></div>
+              <%= render 'layouts/alerts' %>
+              
+            <h4>Edit Educations</h4>
+            <div id="accordion">
+              <% @member.educations.each_with_index do |eds, index| %>
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#edu<%= index %>" aria-expanded="false" aria-controls="collapseOne">
+                        <%= eds.school %>
+                      </button>
+                    </h5>
                   </div>
-                  <div class="resume-date text-md-right">
-                    <span class="text-primary"><%= eds.start.try(:strftime, '%b %Y') %> - <%= eds.end.try(:strftime, '%b %Y') %></span>
+
+                  <div id="edu<%= index %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <%= simple_form_for(eds) do |f| %>
+                      <div class="card-body">
+                        <div class="card-text">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <%= f.input :school %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :degree %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :start %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :end %>
+                            </div>
+                            <div class="col-md-12">
+                              <%= f.input :info %>
+                            </div>
+                            <%= f.hidden_field :member_id %>
+                          </div>
+                        </div>
+                        <%= f.button :submit , :class => 'btn btn-primary' %>
+                            <%= link_to '<i class="fas fa-trash"></i> Delete'.html_safe, eds, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               <% end %>
+            </div>
+
+              
     
             </div>
           </section>
@@ -209,3 +248,4 @@
 
 
 <%= render 'edituser_modal' %>
+<%= render 'editeducation_modal' %>
