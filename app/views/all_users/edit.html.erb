@@ -1,0 +1,20 @@
+<h1>Edit <%= @user.email %></h1>
+
+<%= simple_form_for(@user, :url => edit_all_user_url(@user)) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :admin %>
+    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :password, hint: "leave it blank if you don't want to change it", required: false %>
+    <%= f.input :password_confirmation, required: false %>
+  </div>
+  <p></p>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<%= link_to 'Show', all_user_path(@user) %> |
+<%= link_to 'Back', all_users_path %>
