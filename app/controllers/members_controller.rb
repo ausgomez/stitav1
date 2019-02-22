@@ -5,6 +5,7 @@ class MembersController < ApplicationController
   before_action :check_public, only: [:show]
   before_action :check_created_profile, only: [:new, :create]
   before_action :is_admin?, only: [:index] # only the admin can see all members in a table
+  before_action :user_subscribed, only: [:new, :edit, :create, :destroy]
 
   # GET /members
   # GET /members.json

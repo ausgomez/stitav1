@@ -16,6 +16,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
+# Stripe Payments
+gem 'stripe'
+
 # Bootstrap 4
 gem 'bootstrap', '~> 4.2.1'
 # Jquery Rails

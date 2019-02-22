@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
         def custom_link(text, href)
             "<a href='#{href}'>#{text}</a>".html_safe
         end
+
+        def user_subscribed
+            redirect_to new_subscriber_path, notice: 'You must pay first' unless current_user.admin? || current_user.subscribed? 
+        end
 end
