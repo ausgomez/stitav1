@@ -5,14 +5,23 @@
         <p><%= flash[:error] %></p>
       </div>
     <% end %>
-    <label class="amount">
-      <span>Amount: $25.00</span>
-    </label>
   </article>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+  <div class="card-header"> <i class="fas fa-star"></i> Premium Member</div>
+  <div class="card-body">
+    <h5 class="card-title">$25 / year</h5>
+    <p class="card-text">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           data-description="A yearly's subscription"
           data-amount="2500"
-          data-locale="auto"></script><span>$25 a year</span>
+          data-locale="auto">
+  </script>
+    </p>
+  </div>
+</div>
+
+  
+  
 <% end %>
