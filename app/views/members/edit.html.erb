@@ -37,7 +37,7 @@
                   <%= render 'actions' %>
                 <% end %>
               <li class="nav-item">
-                  <%= link_to '<i class="fas fa-arrow-left"></i> return'.html_safe, members_path, :class => 'nav-link js-scroll-trigger' %>
+                  <%= link_to '<i class="fas fa-arrow-left"></i> Preview'.html_safe, member_path(@member), :class => 'nav-link js-scroll-trigger' %>
               </li>
           </ul>
         </div>
@@ -48,7 +48,7 @@
               <% # if logged in user is the owner of this profile allow them to edit %>
               <% if :validate_user? %>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
-                  <i class="fas fa-user-cog"></i> Edit Profile
+                  <i class="fas fa-pencil-alt"></i> Edit Profile
                 </button>
               <% end %>
               <h1 class="mb-0"><%= @member.fn %>
@@ -79,11 +79,11 @@
               <%= render 'layouts/alerts' %>
               <% if :validate_user? %>
                 <p>
-                  <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#addExpCollapse" aria-expanded="false" aria-controls="addExpCollapse">
                     <i class="fas fa-certificate"></i> Add Experience
                   </button>
                 </p>
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="addExpCollapse">
                   <div class="card card-body">
                     <%# Add Experience %>
                     <%= render 'addExp'%>
@@ -207,56 +207,62 @@
           <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
             <div class="my-auto">
               <h2 class="mb-5">Skills</h2>
-    
-              <div class="subheading mb-3">Programming Languages &amp; Tools</div>
-              <ul class="list-inline dev-icons">
-                <li class="list-inline-item">
-                  <i class="fab fa-html5"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-css3-alt"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-js-square"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-angular"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-react"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-node-js"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-sass"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-less"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-wordpress"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-gulp"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-grunt"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-npm"></i>
-                </li>
-              </ul>
-    
-              <!--div class="subheading mb-3">Workflow</div-->
+              <%= render 'layouts/alerts' %>
+              <% if :validate_user? %>
+                <p>
+                  <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#addSkillCollapse" aria-expanded="false" aria-controls="addExpCollapse">
+                    <i class="fas fa-file-signature"></i> Add New Skill
+                  </button>
+                </p>
+                <div class="collapse" id="addSkillCollapse">
+                  <div class="card card-body">
+                    <%# Add Skill %>
+                    <%= render 'addSkill'%>
+                  </div>
+                </div>
+              <% end %>
+              <hr>
               <ul class="fa-ul mb-0">
-                <% @member.skills.each do |skill| %>
-                  <li>
-                    <i class="fa-li fa fa-check"></i>
-                    <%= skill.name %>, <%= skill.info %>
+                <% @member.skills.each_with_index do |skill, index| %>
+                  <li class="list-inline-item">
+                    <i class="fa-li fa fa-check fa-2x"></i>
+                    <p class="medium">
+                    <%= skill.name %> - <%= skill.info %> 
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addSkillCollapse<%= index %>" aria-expanded="false" aria-controls="addExpCollapse">
+                      <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <%= link_to '<i class="fas fa-times"></i>'.html_safe, skill, method: :delete, data: { confirm: 'Do you want to delete this skill?' }, :class => 'btn btn-danger' %>
+                    </p>
+                    <div class="collapse" id="addSkillCollapse<%= index %>">
+                      <div class="card">
+                        <div class="card-body">
+                          <h6 class="card-subtitle mb-2 text-muted">Edit</h6>
+                          <p class="card-text">
+                            <%= simple_form_for(skill) do |f| %>
+                            <div class="form-inputs">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <%= f.input :name, label: 'Skill name' %>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <%= f.input :info, label: 'Description' %>
+                                    </div>
+                                    <%= f.hidden_field :member_id, :value => @member.id %>
+                                </div>
+                            </div>
+                            <%= f.button :submit, :class => 'btn btn-primary' %>
+                            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#addSkillCollapse<%= index %>" aria-expanded="false" aria-controls="addExpCollapse">
+                                Close
+                            </button>
+                            <% end %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                 <% end %>
               </ul>
+              <hr>
             </div>
           </section>
     
@@ -265,7 +271,12 @@
           <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">
             <div class="my-auto">
               <h2 class="mb-5">Interests</h2>
-              <p><%= @member.interests %></p>
+              <% if :validate_user? %>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
+                  <i class="fas fa-pencil-alt"></i> Edit Interests
+                </button>
+              <% end %>
+              <p class="subheading mb-3"><%= @member.interests %></p>
             </div>
           </section>
     

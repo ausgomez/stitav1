@@ -1,0 +1,18 @@
+<h3>Add new Skill</h3>
+<%= simple_form_for(Skill.new) do |f| %>
+<div class="form-inputs">
+    <div class="row">
+        <div class="col-md-6">
+            <%= f.input :name, label: 'Skill name' %>
+        </div>
+        <div class="col-md-6">
+            <%= f.input :info, label: 'Description' %>
+        </div>
+        <%= f.hidden_field :member_id, :value => @member.id %>
+    </div>
+</div>
+<%= f.button :submit, :class => 'btn btn-primary' %>
+<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#addSkillCollapse" aria-expanded="false" aria-controls="addExpCollapse">
+    Close
+</button>
+<% end %>
