@@ -52,7 +52,7 @@ class MembersController < ApplicationController
       #@member.user_id = current_user.id
       respond_to do |format|
         if @member.update(member_params)
-          format.html { redirect_to @member, notice: 'Member was successfully updated.' }
+          format.html { redirect_to edit_member_url(@member), notice: 'Member was successfully updated.' }
           format.json { render :show, status: :ok, location: @member }
         else
           format.html { render :edit }

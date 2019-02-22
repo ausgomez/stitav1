@@ -25,10 +25,10 @@ class ExperiencesController < ApplicationController
   # POST /experiences.json
   def create
     @experience = Experience.new(experience_params)
-
+    @member = Member.find_by(id: @experience.member_id)
     respond_to do |format|
       if @experience.save
-        format.html { redirect_to @experience, notice: 'Experience was successfully created.' }
+        format.html { redirect_to edit_member_url(@member, :anchor => "experience"), notice: 'Experience was successfully created.' }
         format.json { render :show, status: :created, location: @experience }
       else
         format.html { render :new }
@@ -40,9 +40,10 @@ class ExperiencesController < ApplicationController
   # PATCH/PUT /experiences/1
   # PATCH/PUT /experiences/1.json
   def update
+    @member = Member.find_by(id: @experience.member_id)
     respond_to do |format|
       if @experience.update(experience_params)
-        format.html { redirect_to @experience, notice: 'Experience was successfully updated.' }
+        format.html { redirect_to edit_member_url(@member, :anchor => "experience"), notice: 'Experience was successfully updated.' }
         format.json { render :show, status: :ok, location: @experience }
       else
         format.html { render :edit }
@@ -54,9 +55,10 @@ class ExperiencesController < ApplicationController
   # DELETE /experiences/1
   # DELETE /experiences/1.json
   def destroy
+    @member = Member.find_by(id: @experience.member_id)
     @experience.destroy
     respond_to do |format|
-      format.html { redirect_to experiences_url, notice: 'Experience was successfully destroyed.' }
+      format.html { redirect_to edit_member_url(@member, :anchor => "experience"), notice: 'Experience was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

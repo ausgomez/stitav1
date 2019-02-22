@@ -1,0 +1,15 @@
+<h3>Add new Experience</h3>
+<%= simple_form_for(Experience.new) do |f| %>
+<div class="form-inputs">
+  <%= f.input :pos_name, label: 'What was you position'  %>
+  <%= f.input :company, label: 'What company?' %>
+  <%= f.input :description %>
+  <%= f.input :start, label: 'Start Date', start_year: Time.now.year - 40, order: [:month, :year] %>
+  <%= f.input :end, label: 'End Date', start_year: Time.now.year - 10, order: [:month, :year], prompt: "Current Position", discard_day: true %>
+  <%= f.hidden_field :member_id, :value => @member.id %>
+</div>
+<%= f.button :submit, :class => 'btn btn-primary' %>
+<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Close
+</button>
+<% end %>

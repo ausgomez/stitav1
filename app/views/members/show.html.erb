@@ -83,7 +83,7 @@
                     <p><%= exp.description %></p>
                   </div>
                   <div class="resume-date text-md-right">
-                    <span class="text-primary"><%= exp.start.try(:strftime, '%b %Y') %> - <%= exp.end.try(:strftime, '%b %Y') %></span>
+                    <span class="text-primary"><%= exp.start.try(:strftime, '%b %Y') %> - <%= exp.end.try(:strftime, '%b %Y') unless !exp.end? %> <%= 'Current Postion' unless exp.end? %></span>
                   </div>
                 </div>
               <% end %>

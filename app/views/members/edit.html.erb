@@ -74,21 +74,69 @@
             
             <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">
             <div class="my-auto">
+              
               <h2 class="mb-5">Experience</h2>
-            
-              <% @member.experiences.each do |exp| %>
-                <!-- Position -->
-                <div class="resume-item d-flex flex-column flex-md-row mb-5">
-                  <div class="resume-content mr-auto">
-                    <h3 class="mb-0"><%= exp.pos_name %></h3>
-                    <div class="subheading mb-3"><%= exp.company %></div>
-                    <p><%= exp.description %></p>
-                  </div>
-                  <div class="resume-date text-md-right">
-                    <span class="text-primary"><%= exp.start.try(:strftime, '%b %Y') %> - <%= exp.end.try(:strftime, '%b %Y') %></span>
+              <%= render 'layouts/alerts' %>
+              <% if :validate_user? %>
+                <p>
+                  <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-certificate"></i> Add Experience
+                  </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                    <%# Add Experience %>
+                    <%= render 'addExp'%>
                   </div>
                 </div>
               <% end %>
+              <hr>
+              <% if @member.experiences.any? %>
+                <h3>Edit Experiences at:</h3>
+              <% end %>
+              <div id="accordion">
+              <% @member.experiences.each_with_index do |exp, index| %>
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#exp<%= index %>" aria-expanded="false" aria-controls="collapseOne">
+                        <i class="fas fa-pencil-alt fa-lg"></i> <%= exp.company %>
+                      </button>
+                    </h5>
+                  </div>
+
+                  <div id="exp<%= index %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <%= simple_form_for(exp) do |f| %>
+                      <div class="card-body">
+                        <div class="card-text">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <%= f.input :pos_name %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :company %>
+                            </div>
+                            <div class="col-md-12">
+                              <%= f.input :description %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :start %>
+                            </div>
+                            <div class="col-md-6">
+                              <%= f.input :end, prompt: "Current Position", discard_day: true %>
+                            </div>
+                            <%= f.hidden_field :member_id %>
+                          </div>
+                        </div>
+                        <%= f.button :submit , :class => 'btn btn-primary' %>
+                            <%= link_to '<i class="fas fa-trash"></i> Delete'.html_safe, exp, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+                <p></p>
+              <% end %>
+            </div>
               
             
             </div>
@@ -107,14 +155,14 @@
               <h2 class="mb-5">Education</h2>
               <%= render 'layouts/alerts' %>
               
-            <h4>Edit Educations</h4>
+            <h4><%= 'Edit Educations' unless !@member.educations.any? %></h4>
             <div id="accordion">
               <% @member.educations.each_with_index do |eds, index| %>
                 <div class="card">
                   <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                       <button class="btn btn-link" data-toggle="collapse" data-target="#edu<%= index %>" aria-expanded="false" aria-controls="collapseOne">
-                        <%= eds.school %>
+                        <span class="fas fa-sort-down fa-lg"></span> Modify <%= eds.school %>
                       </button>
                     </h5>
                   </div>
@@ -148,11 +196,9 @@
                     <% end %>
                   </div>
                 </div>
+                <p></p>
               <% end %>
             </div>
-
-              
-    
             </div>
           </section>
     
@@ -247,5 +293,7 @@
 <%= link_to 'Back', members_path %>
 
 
-<%= render 'edituser_modal' %>
+<% # render the modal to edit the user basic info %>
+<%= render 'edituser_modal'  %>
+<% # render the modal to edit user educations %>
 <%= render 'editeducation_modal' %>
