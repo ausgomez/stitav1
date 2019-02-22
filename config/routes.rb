@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'all_users/index'
+  get 'pages/home'
+  root to: 'pages#home'
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :awards
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
   match '/all_users/new', to: 'all_users#create', via: :post
   match '/all_users/:id/edit', to: 'all_users#update', via: :patch
 
-  root to: 'pages#home'
-  get 'pages/home'
+  get 'all_users/index'
 
 end

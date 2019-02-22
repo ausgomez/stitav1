@@ -6,9 +6,10 @@ class SubscribersController < ApplicationController
 
     def update
         token = params[:stripeToken]
+
         customer = Stripe::Customer.create(
             card: token,
-            id: 'prod_EZh2JuRi0EJr1A',
+            plan: 1020,
             email: current_user.email
         )
 
