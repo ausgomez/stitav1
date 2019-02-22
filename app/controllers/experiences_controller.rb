@@ -1,5 +1,5 @@
 class ExperiencesController < ApplicationController
-  before_action :set_experience, only: []:edit, :update, :destroy]
+  before_action :set_experience, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :destroy, :new]
 
   # GET /experiences
