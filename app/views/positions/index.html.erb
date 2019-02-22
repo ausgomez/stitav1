@@ -2,11 +2,11 @@
 
 <h1>Positions</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3"></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -14,9 +14,13 @@
     <% @positions.each do |position| %>
       <tr>
         <td><%= position.name %></td>
-        <td><%= link_to 'Show', position %></td>
-        <td><%= link_to 'Edit', edit_position_path(position) %></td>
-        <td><%= link_to 'Destroy', position, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe, position, :class => 'btn btn-primary' %>
+            <%= link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_position_path(position), :class => 'btn btn-success' %>
+            <%= link_to '<i class="fas fa-trash-alt"></i>'.html_safe, position, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger'%>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Position', new_position_path %>
+<%= link_to 'New Position', new_position_path, :class => 'btn btn-primary' %>
