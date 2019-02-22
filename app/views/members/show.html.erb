@@ -150,8 +150,10 @@
               <ul class="fa-ul mb-0">
                 <% @member.awards.each do |award| %>
                   <li>
+                  <p class="medium">
                     <i class="fa-li fa fa-trophy text-warning"></i>
                     <%= award.name %> - <%= award.year.try(:strftime, '%Y') %>
+                  </p>
                   </li>
                 <% end %>
               </ul>
