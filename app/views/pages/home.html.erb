@@ -14,22 +14,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
               <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#about">About</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#join">Become a Member</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#benefits">Benefits</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#programs">Programs</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#committees">Committees</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="#members">Our Members</a>
+                  <a class="nav-link js-scroll-trigger" href="#about">STITA Members</a>
               </li>
               <hr>
               <li class="nav-item">
@@ -43,118 +28,42 @@
           </ul>
         </div>
     </nav>
+
+    <% if current_user %>
     <div class="container-fluid p-0">
         <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
             <div class="my-auto">
-              <h1 class="mb-0">STITA
-                <span class="text-primary">Members</span>
+              <h1 class="mb-0">Welcome To
+                <span class="text-primary">STITA</span>
               </h1>
               <p></p>
-              <h3>South Texas Information Technology Association</h3>              
-              <div class="subheading mb-5">801 Bryan Rd · Mission, TX 78572 · (956) 585-0040 ·
-                <a href="email@gmail.com">stita@gmail.com</a>
-              </div>
+              <h3>South Texas Information Technology Association</h3>   
+              <br>
               <p class="lead mb-5">
-                To Provide academic, professional development, and employment opportunities
-                to current and aspiring information technology professionals and further IT 
-                infrastructure development and job growth in South Texas.
+                
               </p>
-              <div class="social-icons">
-                <%# link_to '<i class="fab fa-linkedin-in"></i>'.html_safe, url_for(@member.linkedin), data: { confirm: "You are leaving this website" } unless @member.linkedin.to_s.empty? %>
-                <%# link_to '<i class="fab fa-github"></i>'.html_safe, url_for(@member.github), data: { confirm: "You are leaving this website" } unless @member.github.to_s.empty? %>
-                <%# link_to '<i class="fab fa-twitter"></i>'.html_safe, url_for(@member.twitter), data: { confirm: "You are leaving this website" } unless @member.twitter.to_s.empty? %>
-                <%# link_to '<i class="fab fa-facebook-f"></i>'.html_safe, url_for(@member.facebook), data: { confirm: "You are leaving this website" } unless @member.facebook.to_s.empty? %>
-                <%# link_to '<i class="fab fa-instagram"></i>'.html_safe, url_for(@member.instagram), data: { confirm: "You are leaving this website" } unless @member.instagram.to_s.empty? %>
-              </div>
             </div>
-            </section>
-            
-            <hr class="m-0">
-            
-            <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="join">
-            <div class="my-auto">
-              <h2 class="mb-5">Join us now</h2>
-            
-            </div>
-        
-        </section>
-    
-          <hr class="m-0">
-    
-          <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="benefits">
-            <div class="my-auto">
-              <h2 class="mb-5">Benefits</h2>
-            </div>
-          </section>
-    
-          <hr class="m-0">
-    
-          <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="programs">
-            <div class="my-auto">
-              <h2 class="mb-5">Programs</h2>
-    
-              <div class="subheading mb-3">Programming Languages &amp; Tools</div>
-              <ul class="list-inline dev-icons">
-                <li class="list-inline-item">
-                  <i class="fab fa-html5"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-css3-alt"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-js-square"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-angular"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-react"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-node-js"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-sass"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-less"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-wordpress"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-gulp"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-grunt"></i>
-                </li>
-                <li class="list-inline-item">
-                  <i class="fab fa-npm"></i>
-                </li>
-              </ul>
-    
-            </div>
-          </section>
-    
-          <hr class="m-0">
-    
-          <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="committees">
-            <div class="my-auto">
-              <h2 class="mb-5">Committees</h2>
-              <p>Interests text</p>
-            </div>
-          </section>
-    
-          <hr class="m-0">
-    
-          <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="members">
-            <div class="my-auto">
-              <h2 class="mb-5">Members</h2>
-            </div>
-          </section>
-    
+            </section> 
     </div>
-
+  <% else %>
+    <div class="container-fluid p-0">
+        <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+            <div class="my-auto">
+              <h1 class="mb-0">Join us
+                <span class="text-primary">now</span>
+              </h1>
+              <p></p>
+              <h3>South Texas Information Technology Association</h3>   
+              <br>
+              <p class="lead mb-5">
+                <%= link_to 'Become a member', new_user_registration_path, class: 'btn btn-info btn-lg btn-block' %>
+                <hr>
+                <%= link_to 'Already a member? Log in', new_user_session_path %>
+              </p>
+            </div>
+            </section> 
+    </div>
+    <% end %>
 </div>
 
 
