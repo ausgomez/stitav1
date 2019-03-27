@@ -7,7 +7,7 @@ class AllUsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all.order("id ASC")
+    @users = User.all.order("subscribed ASC")
   end
 
   # GET /users/1

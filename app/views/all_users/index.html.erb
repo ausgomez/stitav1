@@ -16,7 +16,13 @@
           <th scope="row"><%= user.id %></th>
           <td></a><%= user.email %></td>
           <td><%= user.admin? %></td>
-          <td><%= user.subscribed? %></td>
+          <td>
+            <% if user.subscribed? %>
+              <i class="fas fa-check-square" style="color: Dodgerblue;"></i>
+            <% else %>
+              <i class="fas fa-times-circle" style="color: Tomato;"></i>
+            <% end %>
+          </td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <%= link_to '<i class="fas fa-folder-open"></i>'.html_safe, all_user_path(user), :class => 'btn btn-primary' %>
