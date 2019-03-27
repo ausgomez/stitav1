@@ -26,7 +26,8 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
-    
+    # if the user is allowed to edit this profile, send notice
+    flash.now[:notice] = ('You can edit this profile')
   end
 
   # POST /members

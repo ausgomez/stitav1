@@ -49,7 +49,7 @@
             <div class="my-auto">
               <% # if logged in user is the owner of this profile allow them to edit %>
               <% if current_user %>
-                <%= link_to '<i class="fas fa-pencil-alt"></i> Edit my profile'.html_safe, edit_member_path(@member), :class => 'btn btn-success' if current_user.admin || current_user.id == @member.user_id %>
+                <%= link_to '<i class="fas fa-unlock"></i> Edit my profile'.html_safe, edit_member_path(@member), :class => 'btn btn-success' if current_user.admin || current_user.id == @member.user_id %>
               <% end %>
               <h1 class="mb-0"><%= @member.fn %>
                 <span class="text-primary"><%= @member.ln %></span>
