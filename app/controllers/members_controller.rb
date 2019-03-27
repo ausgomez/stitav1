@@ -34,6 +34,12 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(member_params)
     @member.user_id = current_user.id
+
+    # if gravar email was left blank, use its default email
+    if @member.photo.empty?
+      @member.photo = @member.email
+    end
+
     @positions = Position.all
     # In this part I want to specify that the member being created is under the user logged in
     respond_to do |format|
@@ -65,7 +71,6 @@ class MembersController < ApplicationController
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
-    
     @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }

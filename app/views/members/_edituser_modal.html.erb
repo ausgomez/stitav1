@@ -36,7 +36,10 @@
           </div>
           <% end %>
           <div class="form-group col-md-6">
-            <%= f.input :photo, label: 'Photo Link' %>
+            <!--%= f.input :photo, label: 'Gravatar email' %-->
+            <label for="gravatar"><i class="fas fa-user-circle"></i> Gravatar Image</label>
+            <p></p>
+            <%= link_to 'Edit Gravatar <i class="fas fa-external-link-alt"></i>'.html_safe, "https://en.gravatar.com/emails/", class: 'btn btn-primary', label: 'Photo Image', target: :_blank %>
           </div>
           <div class="form-group col-md-6">
             <% if current_user && current_user.admin? # only admins can change a member's position whatsoever %>
