@@ -15,7 +15,13 @@
         <tr>
           <th scope="row"><%= user.id %></th>
           <td></a><%= user.email %></td>
-          <td><%= user.admin? %></td>
+          <td>
+            <% if admin? %>
+              <i class="fas fa-check-square" style="color: Dodgerblue;"></i>
+            <% else %>
+              <i class="fas fa-times-circle" style="color: Tomato;"></i>
+            <% end %>
+          </td>
           <td>
             <% if user.subscribed? %>
               <i class="fas fa-check-square" style="color: Dodgerblue;"></i>
