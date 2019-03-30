@@ -7,7 +7,6 @@
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
       <th scope="col">Custom ID</th>
-      <th scope="col">User</th>
       <th scope="col">Active</th>
       <th scope="col"></th>
     </tr>
@@ -20,9 +19,6 @@
         <td><%= member.fn %></td>
         <td><%= member.ln %></td>
         <td><%= member.custom_id %></td>
-        <td>
-          <%= member.user.email %>
-        </td>
         <td><%= member.active? %></td>
         <td>
           <div class="btn-group" role="group" aria-label="Basic example">
